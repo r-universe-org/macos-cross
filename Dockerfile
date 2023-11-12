@@ -1,5 +1,7 @@
-FROM ghcr.io/r-universe-org/base-image AS build
 ARG OSX_SDK="MacOSX13.1.sdk"
+
+FROM ghcr.io/r-universe-org/base-image AS build
+ARG OSX_SDK
 
 # Download osxcross
 RUN curl -sSOL https://github.com/tpoechtrager/osxcross/archive/refs/heads/master.tar.gz &&\
@@ -33,10 +35,13 @@ RUN PATH=/osxcross/bin:$PATH:~/.local/bin ./build_gcc.sh
 ##### Actual Image #####
 
 FROM ghcr.io/r-universe-org/base-image
+ARG OSX_SDK
 COPY --from=build /osxcross /osxcross
 ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
-ENV MACOSX_DEPLOYMENT_TARGET=11.0
 ENV PATH="/osxcross/bin:${PATH}"
+##ENV MACOSX_DEPLOYMENT_TARGET=11.0
+
+RUN apt-get install -y clang
 
 RUN ln -s x86_64-apple-darwin22-ar /osxcross/bin/ar && \
     ln -s /osxcross/bin/x86_64-apple-darwin22-ranlib /osxcross/bin/ranlib
