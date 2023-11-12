@@ -16,6 +16,6 @@
 # https://linux.die.net/man/1/pkg-config
 # https://autotools.info/pkgconfig/cross-compiling.html
 
-export PKG_CONFIG_LIBDIR=/macos/usr/lib/pkgconfig:/opt/R/x86_64/lib/pkgconfig:/osxcross/macports/pkgs/opt/local/lib/pkgconfig
+export PKG_CONFIG_LIBDIR=/macos/usr/lib/pkgconfig:/opt/R/x86_64/lib/pkgconfig:/opt/R/x86_64/share/pkgconfig:/osxcross/macports/pkgs/opt/local/lib/pkgconfig
 
-exec /usr/bin/pkg-config "$@"
+exec /usr/bin/pkg-config --static "$@"
