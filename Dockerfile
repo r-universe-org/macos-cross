@@ -13,9 +13,6 @@ WORKDIR /osxcross-master
 # Download SDK
 RUN curl -sSL "https://github.com/joseluisq/macosx-sdks/releases/download/13.1/${OSX_SDK}.tar.xz" -o "tarballs/${OSX_SDK}.tar.xz"
 
-# Extract SDK
-RUN mkdir /osxsdk && tar -xf "tarballs/${OSX_SDK}.tar.xz" -C "/osxsdk"
-
 # Get osxcross dependencies
 RUN apt-get update && tools/get_dependencies.sh
 
