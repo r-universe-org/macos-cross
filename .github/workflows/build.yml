@@ -10,6 +10,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -23,10 +26,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
-        id: docker_build
+      - name: Build osxcross toolchain
         uses: docker/build-push-action@v3
         with:
+          context: toolchain
           push: true
           tags: |
+            ghcr.io/${{github.repository}}:toolchain
+
+      - name: Build R-4.3-x86_64
+        uses: docker/build-push-action@v3
+        with:
+          context: R-4.3-x86_64
+          push: true
+          tags: |
+            ghcr.io/${{github.repository}}/r-4.3-x86_64:latest
             ghcr.io/${{github.repository}}:latest

@@ -36,7 +36,6 @@ ARG OSX_SDK
 COPY --from=build /osxcross /osxcross
 ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
 ENV PATH="/osxcross/bin:${PATH}"
-##ENV MACOSX_DEPLOYMENT_TARGET=11.0
 
 RUN apt-get install -y clang
 
