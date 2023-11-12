@@ -1,3 +1,4 @@
+# When bumping the SDK version you also need to change the darwin version in Makeconf and symlinks.
 ARG OSX_SDK="MacOSX13.1.sdk"
 
 FROM ghcr.io/r-universe-org/base-image AS build
@@ -35,13 +36,6 @@ FROM ghcr.io/r-universe-org/base-image
 ARG OSX_SDK
 COPY --from=build /osxcross /osxcross
 ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
-ENV PATH="/osxcross/bin:${PATH}"
+ENV PATH="/osxcross/bin:${MACOS_SDK_PATH}/usr/bin:${PATH}"
 
-RUN apt-get install -y clang
-
-RUN ln -s x86_64-apple-darwin22-ar /osxcross/bin/ar && \
-    ln -s /osxcross/bin/x86_64-apple-darwin22-ranlib /osxcross/bin/ranlib && \
-    ln -s /osxcross/bin/x86_64-apple-darwin22-install_name_tool /osxcross/bin/install_name_tool
-
-RUN ln -s "${MACOS_SDK_PATH}/usr/bin/curl-config" /usr/local/bin/curl-config && \
-    ln -s "${MACOS_SDK_PATH}/usr/bin/xml2-config" /usr/local/bin/xml2-config
+RUN apt-get install -y clang llvm lld
