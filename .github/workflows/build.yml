@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'master'
+    paths:
+      - 'R-4.3-x86_64/*'
+      - 'toolchain/*'
   workflow_dispatch:
 
 jobs:

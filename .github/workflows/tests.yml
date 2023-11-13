@@ -1,0 +1,20 @@
+name: Test building some packages
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'tests/*'
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/r-universe-org/macos-cross/r-4.3-x86_64:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run tests
+        run: cd tests; ./run.sh
