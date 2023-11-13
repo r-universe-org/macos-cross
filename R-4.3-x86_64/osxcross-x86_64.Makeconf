@@ -30,7 +30,7 @@ LIBS_MACOS = -L/macos/usr/lib
 
 # Set the minimum target macOS version. Must be set, even though not in the default
 # R Makeconf any longer, because we use a very recent macOS SDK.
-MACOS_VERSION_MIN = -mmacosx-version-min=10.13
+MACOS_VERSION_MIN = -mmacosx-version-min=11.0
 
 ## This fails if it contains spaces, or if it is quoted
 include $(R_SHARE_DIR)/make/vars.mk
