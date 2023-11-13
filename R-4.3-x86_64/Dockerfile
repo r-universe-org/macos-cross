@@ -8,7 +8,12 @@ ENV MACOSX_DEPLOYMENT_TARGET=11.0
 ENV LIBRARY_PATH=/opt/R/x86_64/lib:${LIBRARY_PATH}
 ENV R_CONFIGURE_FLAGS="--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}"
 ENV R_BUILD_FLAGS="--no-test-load --configure-args='--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}'"
+
+# Remove debug symbols (is this needed?)
+# Todo: properly merge the MacOS Renviron with the Linux one
 ENV _R_SHLIB_STRIP_=true
+ENV R_STRIP_SHARED_LIB="strip -x"
+ENV R_STRIP_STATIC_LIB="strip -S"
 
 # Download and extract MacOS R
 RUN mkdir -p /macos/r &&\
@@ -23,8 +28,9 @@ RUN curl -ssOL https://github.com/r-universe-org/cranlibs/releases/download/2023
 	ln -s /opt/R/x86_64 /macos/usr
 
 
-# Put some stuff on the path. Note that 'darwin22' depends on SDK version.
+# Put some stuff on the path. There {DARWIN} depends on SDK version.
 RUN ln -s x86_64-apple-${DARWIN}-ar /osxcross/bin/ar && \
+    ln -s /osxcross/bin/x86_64-apple-${DARWIN}-strip /osxcross/bin/strip && \
     ln -s /osxcross/bin/x86_64-apple-${DARWIN}-ranlib /osxcross/bin/ranlib && \
     ln -s /osxcross/bin/x86_64-apple-${DARWIN}-install_name_tool /osxcross/bin/install_name_tool
 
