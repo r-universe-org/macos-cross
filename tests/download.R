@@ -1,6 +1,8 @@
 # Test set of interesting packages
 pkgs <- c('ragg', 'stringi', 'igraph', 'V8', 'opencv', 'magick', 'pdftools', 
-  'protolite', 'curl', 'openssl', 'RMariaDB', "RPostgres")
+  'protolite', 'curl', 'openssl', 'RMariaDB', "RPostgres", "glmnet", "av",
+  "gert", 'mongolite', 'rsvg', 'rzmq', 'sodium', 'tesseract', 'writexl',
+  "shiny", "tidyverse")
 
 # Install host binaries + dependencies
 install.packages(pkgs)

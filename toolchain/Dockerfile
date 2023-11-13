@@ -39,3 +39,8 @@ ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
 ENV PATH="/osxcross/bin:${MACOS_SDK_PATH}/usr/bin:${PATH}"
 
 RUN apt-get install -y clang llvm lld
+
+# Prevent packages from finding Linux host libraries
+RUN mv /usr/bin/pkg-config /usr/bin/pcbak &&\
+    rm -fv /usr/bin/*-config /usr/bin/*_config &&\
+    mv /usr/bin/pcbak /usr/bin/pkg-config
