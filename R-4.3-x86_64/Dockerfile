@@ -7,13 +7,19 @@ ENV MACOS_BUILD=1
 ENV MACOSX_DEPLOYMENT_TARGET=11.0
 ENV LIBRARY_PATH=/opt/R/x86_64/lib:${LIBRARY_PATH}
 ENV R_CONFIGURE_FLAGS="--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}"
-ENV R_BUILD_FLAGS="--no-test-load --configure-args='--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}'"
 
 # Remove debug symbols (is this needed?)
 # Todo: properly merge the MacOS Renviron with the Linux one
 ENV _R_SHLIB_STRIP_=true
 ENV R_STRIP_SHARED_LIB="strip -x"
 ENV R_STRIP_STATIC_LIB="strip -S"
+
+RUN \
+    curl https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc > /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list.d/cran.list  && \
+    apt-get update && \
+    apt-get -yq install --no-install-recommends r-recommended language-pack-en-base &&\
+    apt-get clean
 
 # Download and extract MacOS R
 RUN mkdir -p /macos/r &&\
@@ -27,6 +33,10 @@ RUN curl -ssOL https://github.com/r-universe-org/cranlibs/releases/download/2023
 	rm -f cranlibs.tar.xz &&\
 	ln -s /opt/R/x86_64 /macos/usr
 
+## Set RSPM as the default repo to get precompiled packages
+RUN RPROFILE=$(R RHOME)/etc/Rprofile.site && \
+    echo 'options(repos = c(CRAN = "https://p3m.dev/cran/__linux__/jammy/latest"))' >> "$RPROFILE" && \
+    echo 'options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)))' >> "$RPROFILE"
 
 # Put some stuff on the path. There {DARWIN} depends on SDK version.
 RUN ln -s x86_64-apple-${DARWIN}-ar /osxcross/bin/ar && \

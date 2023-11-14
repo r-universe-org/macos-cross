@@ -10,7 +10,7 @@ mkdir -p temp
 for pkg in sources/*.tar.gz; do
 	FAIL="OK"
 	rm -Rf out.log temp/*
-	PKGNAME=$(basename $pkg | cut -d '_' -f1)
+	pkg_name=$(basename $pkg | cut -d '_' -f1)
 
 	# Apply patch script if exists
 	patch_script="patches/${pkg_name}.sh"
@@ -20,7 +20,7 @@ for pkg in sources/*.tar.gz; do
 	fi
 
 	R CMD INSTALL $pkg --build --library=temp --no-test-load --configure-args="$R_CONFIGURE_FLAGS" > out.log 2>&1 || FAIL="FAILED";
-	echo "::group::$(basename $pkg) $FAIL"
+	echo "::group::${pkg_name} $FAIL"
 	cat out.log
 	mv *.tar.gz binaries/ || true
 	echo "::endgroup::"

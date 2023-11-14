@@ -32,18 +32,16 @@ RUN PATH=/osxcross/bin:$PATH:~/.local/bin ./build_gcc.sh
 
 ##### Actual Image #####
 
-FROM ghcr.io/r-universe-org/base-image
+FROM ubuntu:jammy
 ARG OSX_SDK
 COPY --from=build /osxcross /osxcross
 ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
 ENV PATH="/osxcross/bin:${MACOS_SDK_PATH}/usr/bin:${PATH}"
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
 
-# Used by httpuv
-ENV LIBTOOLIZE=libtoolize
+RUN apt-get update && apt-get install -y pkg-config clang llvm lld jq curl make libtool autoconf automake
 
-RUN apt-get install -y clang llvm lld
-
-# Prevent packages from finding Linux host libraries
-RUN mv /usr/bin/pkg-config /usr/bin/pcbak &&\
-    rm -fv /usr/bin/*-config /usr/bin/*_config &&\
-    mv /usr/bin/pcbak /usr/bin/pkg-config
+RUN CRANLIBS=$(curl https://r-universe.dev/stats/sysdeps | jq --slurp -r '.[].packages | flatten[]') &&\
+    apt-get install -y --no-install-recommends $CRANLIBS
