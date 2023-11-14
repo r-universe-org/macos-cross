@@ -9,12 +9,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  docker:
+  compile:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/r-universe-org/macos-cross/r-4.3-x86_64:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Cross compile packages
+        run: cd tests; ./build.sh
+      - name: Upload binary packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: binaries
+          path: tests/binaries
+
+  test:
+    runs-on: macos-latest
+    needs: [compile]
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: binaries
+          path: tests/binaries
+      - name: Install R
+        uses: r-universe-org/actions/setup-r@master
+        id: install-r
+        with:
+          r-version: '4.3'
+        env:
+          NOT_CRAN: false
       - name: Run tests
-        run: cd tests; ./run.sh
+        run: cd tests; ./test.sh
