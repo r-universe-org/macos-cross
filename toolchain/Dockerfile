@@ -38,6 +38,9 @@ COPY --from=build /osxcross /osxcross
 ENV MACOS_SDK_PATH="/osxcross/SDK/${OSX_SDK}"
 ENV PATH="/osxcross/bin:${MACOS_SDK_PATH}/usr/bin:${PATH}"
 
+# Used by httpuv
+ENV LIBTOOLIZE=libtoolize
+
 RUN apt-get install -y clang llvm lld
 
 # Prevent packages from finding Linux host libraries
