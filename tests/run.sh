@@ -12,6 +12,6 @@ for pkg in sources/*.tar.gz; do
 	R CMD INSTALL $pkg --library=temp --no-test-load --configure-args="$R_CONFIGURE_FLAGS" > out.log 2>&1 || FAIL="FAILED";
 	echo "::group::$(basename $pkg) $FAIL"
 	cat out.log
-	echo "::endgroup::"
 	mv temp/* binaries/ || true
+	echo "::endgroup::"
 done

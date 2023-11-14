@@ -5,7 +5,7 @@ pkgs <- c('ragg', 'stringi', 'igraph', 'V8', 'opencv', 'magick', 'pdftools',
   "shiny", "tidyverse")
 
 # Install host binaries + dependencies
-install.packages(pkgs)
+install.packages(pkgs, repos = 'https://p3m.dev/cran/__linux__/jammy/latest')
 
 # Get all the sources
 deps <- unname(unlist(tools::package_dependencies(pkgs, recursive = TRUE)))
