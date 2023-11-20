@@ -14,15 +14,15 @@ To cross compile a package, we first install the binary package with dependencie
 
 ```sh
 # Install host binaries + dependencies
-R -e "install.packages('magick', repos = 'https://p3m.dev/cran/__linux__/jammy/latest')"
+R -e "install.packages('pdftools', repos = 'https://p3m.dev/cran/__linux__/jammy/latest')"
 ```
 
 Then we compile the source package:
 
 ```sh
 mkdir -p maclibs
-curl -OL "https://cloud.r-project.org/src/contrib/magick_2.8.1.tar.gz"
-R CMD INSTALL magick_2.8.1.tar.gz --build --no-test-load --library=maclibs
+curl -OL "https://cran.r-project.org/src/contrib/Archive/pdftools/pdftools_3.3.3.tar.gz"
+R CMD INSTALL pdftools_3.3.3.tar.gz --build --no-test-load --library=maclibs
 ```
 
 We use `--no-test-load` because the cross-compiled MacOS binary cannot be loaded on Linux.
