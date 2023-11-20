@@ -52,5 +52,9 @@ RUN cp -R /macos/r/etc /usr/lib/R/etc
 RUN cp -R /macos/r/share/make /usr/share/R/share/make
 RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
 
+# Experiment: force linking errors
+RUN sed -i "s/-undefined dynamic_lookup//g" /usr/lib/R/etc/Makeconf &&\
+    sed -i '/^LIBR =/ s/$/ $(LIBR1)/' /usr/lib/R/etc/Makeconf
+
 # Make bash the system shell (just like on MacOS) because some packages assume this
 RUN ln -sf /bin/bash /bin/sh
