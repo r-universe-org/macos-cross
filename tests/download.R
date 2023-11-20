@@ -1,10 +1,12 @@
 # Test set of interesting packages
-pkgs <- c('ragg', 'stringi', 'igraph', 'V8', 'opencv', 'magick', 'pdftools', 
-  'protolite', 'curl', 'openssl', 'RMariaDB', "RPostgres", "glmnet", "av",
-  "gert", 'mongolite', 'rsvg', 'rzmq', 'sodium', 'tesseract', 'writexl',
-  "shiny", "tidyverse", 'RcppParallel', 'antiword', 'unrtf', 'brotli',
-  'cld2', 'gert', 'hunspell', 'RMySQL', 'rzmq', 'ssh', 'webp', 'writxl',
-  'glmnet', 'sparsenet', 'gam', 'data.table', 'sf', 'stars')
+pkgs <- c("antiword", "av", "brotli", "cld2", "curl", "data.table", "gam",
+"gdtools", "gert", "gert", "git2r", "glmnet", "glmnet", "httpgd",
+"hunspell", "igraph", "image.textlinedetector", "jqr", "magick",
+"Matrix", "mongolite", "odbc", "opencv", "openssl", "pdftools",
+"protolite", "ragg", "RcppParallel", "redux", "RMariaDB", "RMySQL",
+"RPostgres", "rsvg", "rzmq", "rzmq", "sf", "shiny", "sodium",
+"sparsenet", "ssh", "stars", "stringi", "tesseract", "tidyverse",
+"tiledb", "unrtf", "V8", "webp", "writexl", "writxl")
 
 # Install host binaries + dependencies
 install.packages(pkgs, repos = 'https://p3m.dev/cran/__linux__/jammy/latest')
