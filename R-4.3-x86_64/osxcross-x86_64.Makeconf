@@ -23,7 +23,7 @@ FUSE_LD_MACOS = -fuse-ld=/osxcross/bin/x86_64-apple-darwin22-ld
 
 # Libraries from a package's dependencies during a build, for the rare cases
 # where a package links to another package.
-PKG_LIBS_MACOS = -L"/tmp/macosSLs" -L"/tmp/macosDLs"
+#PKG_LIBS_MACOS = -L"/tmp/macosSLs" -L"/tmp/macosDLs"
 
 # System libs for R packages (from Autobrew)
 LIBS_MACOS = -L/macos/usr/lib
