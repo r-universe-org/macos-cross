@@ -2,7 +2,7 @@
 pkgs <- c('ragg', 'stringi', 'igraph', 'V8', 'opencv', 'magick', 'pdftools', 
   'protolite', 'curl', 'openssl', 'RMariaDB', "RPostgres", "glmnet", "av",
   "gert", 'mongolite', 'rsvg', 'rzmq', 'sodium', 'tesseract', 'writexl',
-  "shiny", "tidyverse")
+  "shiny", "tidyverse", 'RcppParallel')
 
 # Install host binaries + dependencies
 install.packages(pkgs, repos = 'https://p3m.dev/cran/__linux__/jammy/latest')
