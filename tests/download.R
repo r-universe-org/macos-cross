@@ -1,12 +1,13 @@
 # Test set of interesting packages
-pkgs <- c("antiword", "av", "brotli", "cld2", "curl", "data.table", "gam",
-"gdtools", "gert", "gert", "git2r", "glmnet", "glmnet", "httpgd",
-"hunspell", "igraph", "image.textlinedetector", "jqr", "magick",
+pkgs <- c("antiword", "arrangements", "av", "brotli", "Cairo", "cld2",
+"curl", "data.table", "fftw", "fftwtools", "gam", "gdtools",
+"gert", "git2r", "glmnet", "gmp", "httpgd", "hunspell", "igraph",
+"image.textlinedetector", "imager", "jqr", "lwgeom", "magick",
 "Matrix", "mongolite", "odbc", "opencv", "openssl", "pdftools",
-"protolite", "ragg", "RcppParallel", "redux", "RMariaDB", "RMySQL",
-"RPostgres", "rsvg", "rzmq", "rzmq", "sf", "shiny", "sodium",
-"sparsenet", "ssh", "stars", "stringi", "tesseract", "tidyverse",
-"tiledb", "unrtf", "V8", "webp", "writexl", "writxl")
+"proj4", "protolite", "ragg", "RcppAlgos", "RcppParallel", "redux",
+"RMariaDB", "RMySQL", "RPostgres", "rsvg", "rzmq", "sf", "shiny",
+"sodium", "sparsenet", "ssh", "stars", "stringi", "terra", "tesseract",
+"tidyverse", "tiledb", "unrtf", "V8", "webp", "writexl", "writxl")
 
 # Install host binaries + dependencies
 install.packages(pkgs, repos = 'https://p3m.dev/cran/__linux__/jammy/latest')
