@@ -50,7 +50,8 @@ RUN RPROFILE=$(R RHOME)/etc/Rprofile.site && \
 RUN ln -s x86_64-apple-${DARWIN}-ar /osxcross/bin/ar && \
     ln -s /osxcross/bin/x86_64-apple-${DARWIN}-strip /osxcross/bin/strip && \
     ln -s /osxcross/bin/x86_64-apple-${DARWIN}-ranlib /osxcross/bin/ranlib && \
-    ln -s /osxcross/bin/x86_64-apple-${DARWIN}-install_name_tool /osxcross/bin/install_name_tool
+    ln -s /osxcross/bin/x86_64-apple-${DARWIN}-install_name_tool /osxcross/bin/install_name_tool &&\
+    rm /opt/R/x86_64/bin/pkg-config && ln -s /opt/R/x86_64/bin/*-config /osxcross/bin/
 
 # Prep host R for cross compiling
 COPY osxcross-x86_64.Makeconf /usr/lib/R/etc/Makeconf
@@ -60,7 +61,6 @@ RUN cp -R /macos/r/etc /usr/lib/R/etc
 RUN cp -R /macos/r/share/make /usr/share/R/share/make
 RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
 
-ENV PATH="/opt/R/x86_64/bin:${PATH}"
 ENV PROJ_GDAL_DATA_COPY=TRUE
 ENV ARROW_R_DEV=TRUE
 
