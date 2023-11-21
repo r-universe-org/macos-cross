@@ -43,5 +43,8 @@ ENV LANG en_US.UTF-8
 
 RUN apt-get update && apt-get install -y pkg-config clang llvm lld jq curl make libtool autoconf automake
 
+# We use the host pkg-config (test with fftw R package)
+RUN rm -v /osxcross/bin/*pkg-config
+
 RUN CRANLIBS=$(curl https://r-universe.dev/stats/sysdeps | jq --slurp -r '.[].packages | flatten[]') &&\
     apt-get install -y --no-install-recommends $CRANLIBS
