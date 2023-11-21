@@ -18,8 +18,16 @@ RUN \
     curl https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc > /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
     echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list.d/cran.list  && \
     apt-get update && \
-    apt-get -yq install --no-install-recommends r-recommended language-pack-en-base &&\
+    apt-get -yq install --no-install-recommends cpio r-recommended language-pack-en-base &&\
     apt-get clean
+
+RUN mkdir /tmp/xq && cd /tmp/xq &&\
+    curl -fsSOL https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg &&\
+    xar -x -f XQuartz-2.8.5.pkg &&\
+    cd XQuartzComponent.pkg &&\
+    gzip -cd Payload | cpio -idm &&\
+    mv opt/X11 /opt/ &&\
+    cd / && rm -Rf /tmp/xq
 
 # Download and extract MacOS R
 RUN mkdir -p /macos/r &&\
