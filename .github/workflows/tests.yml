@@ -42,5 +42,14 @@ jobs:
           r-version: '4.3'
         env:
           NOT_CRAN: false
+      - shell: bash
+        run: |
+          echo "::group::Installing XQuartz"
+          echo "Downloading XQuartz..."
+          curl --retry 3 -fsSLO https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg
+          sudo installer -pkg "XQuartz-2.8.5.pkg" -target /
+          rm -f XQuartz-2.8.5.pkg
+          echo "Done installing XQuartz!"
+          echo "::endgroup::"
       - name: Run tests
         run: cd tests; ./test.sh
