@@ -53,6 +53,8 @@ RUN cp -R /macos/r/share/make /usr/share/R/share/make
 RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
 
 ENV PATH="/opt/R/x86_64/bin:${PATH}"
+ENV PROJ_GDAL_DATA_COPY=TRUE
+ENV ARROW_R_DEV=TRUE
 
 # Experiment: force linking errors
 RUN sed -i "s/-undefined dynamic_lookup//g" /usr/lib/R/etc/Makeconf &&\
