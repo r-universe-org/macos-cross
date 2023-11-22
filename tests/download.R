@@ -1,13 +1,14 @@
 # Test set of interesting packages
 pkgs <- c("antiword", "arrangements", "arrow", "av", "brotli", "Cairo",
-"cld2", "curl", "data.table", "fftw", "fftwtools", "gam", "gdtools",
-"gert", "git2r", "glmnet", "gmp", "httpgd", "hunspell", "igraph",
-"image.textlinedetector", "imager", "jqr", "lwgeom", "magick",
-"Matrix", "mongolite", "odbc", "opencv", "openssl", "pdftools",
-"proj4", "protolite", "ragg", "RcppAlgos", "RcppParallel", "redux",
-"RMariaDB", "RMySQL", "RPostgres", "rsvg", "rzmq", "sf", "shiny",
-"sodium", "sparsenet", "ssh", "stars", "stringi", "terra", "tesseract",
-"tidyverse", "tiledb", "unrtf", "V8", "webp", "writexl")
+"cld2", "curl", "data.table", "duckdb", "fftw", "fftwtools",
+"gam", "gdtools", "gert", "git2r", "glmnet", "gmp", "httpgd",
+"hunspell", "igraph", "image.textlinedetector", "imager", "jqr",
+"lwgeom", "magick", "Matrix", "mongolite", "odbc", "opencv",
+"openssl", "pdftools", "proj4", "protolite", "ragg", "RcppAlgos",
+"RcppParallel", "redux", "RMariaDB", "RMySQL", "RPostgres", "rsvg",
+"rzmq", "sf", "shiny", "sodium", "sparsenet", "ssh", "stars",
+"stringi", "terra", "tesseract", "tidyverse", "tiledb", "unrtf",
+"V8", "webp", "writexl")
 
 cat("::group::Installing host dependencies\n")
 # Install host binaries + dependencies
