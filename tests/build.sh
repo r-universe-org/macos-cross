@@ -19,9 +19,9 @@ for pkg in sources/*.tar.gz; do
 	  pkg=$($patch_script "$pkg")
 	fi
 
-	R CMD INSTALL $pkg --build --library=temp --no-test-load --configure-args="$R_CONFIGURE_FLAGS" > out.log 2>&1 || FAIL="FAILED";
+	build-package $pkg > out.log 2>&1 || FAIL="FAILED";
 	echo "::group::${pkg_name} $FAIL"
 	cat out.log
-	mv *.tar.gz binaries/ || true
+	mv *.tgz binaries/ || true
 	echo "::endgroup::"
 done

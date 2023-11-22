@@ -51,6 +51,7 @@ RUN ln -s x86_64-apple-${DARWIN}-ar /osxcross/bin/ar && \
 COPY osxcross-x86_64.Makeconf /usr/lib/R/etc/Makeconf
 COPY uname-x86_64.sh /osxcross/bin/uname
 COPY pkg-config-x86_64.sh /osxcross/bin/pkg-config
+COPY build-package-x86_64.sh /osxcross/bin/build-package
 
 # Fixup hardcoded things ppm
 RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
