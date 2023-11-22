@@ -7,13 +7,20 @@ pkgs <- c("antiword", "arrangements", "av", "brotli", "Cairo", "cld2",
 "proj4", "protolite", "ragg", "RcppAlgos", "RcppParallel", "redux",
 "RMariaDB", "RMySQL", "RPostgres", "rsvg", "rzmq", "sf", "shiny",
 "sodium", "sparsenet", "ssh", "stars", "stringi", "terra", "tesseract",
-"tidyverse", "tiledb", "unrtf", "V8", "webp", "writexl", "writxl")
+"tidyverse", "tiledb", "unrtf", "V8", "webp", "writexl")
 
+cat("::group::Installing host dependencies\n")
 # Install host binaries + dependencies
 install.packages(pkgs, repos = 'https://p3m.dev/cran/__linux__/jammy/latest')
+cat("::endgroup::\n")
 
 # Get all the sources
+cat("::group::Downloading sources\n")
 deps <- unname(unlist(tools::package_dependencies(pkgs, recursive = TRUE)))
 allpkgs <- sort(unique(c(pkgs, deps)))
 dir.create('sources')
-download.packages(allpkgs, 'sources', repos = 'https://cloud.r-project.org')
+download.packages(allpkgs, 'sources', repos = c(
+  'https://r-spatial.r-universe.dev',
+  'https://ropensci.r-universe.dev',
+  'https://cloud.r-project.org'))
+cat("::endgroup::\n")
