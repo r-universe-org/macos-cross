@@ -43,6 +43,7 @@ jobs:
         env:
           NOT_CRAN: false
       - shell: bash
+        name: Install XQuartz
         run: |
           echo "::group::Installing XQuartz"
           echo "Downloading XQuartz..."
@@ -51,5 +52,5 @@ jobs:
           rm -f XQuartz-2.8.5.pkg
           echo "Done installing XQuartz!"
           echo "::endgroup::"
-      - name: Run tests
+      - name: Testload the binaries
         run: cd tests; ./test.sh
