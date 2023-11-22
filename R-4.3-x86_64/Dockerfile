@@ -64,6 +64,9 @@ RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
 ENV PROJ_GDAL_DATA_COPY=TRUE
 ENV ARROW_R_DEV=TRUE
 
+# This determines only filename for created tarballs
+R_PLATFORM=x86_64-apple-darwin20
+
 # Experiment: force linking errors
 RUN sed -i "s/-undefined dynamic_lookup//g" /usr/lib/R/etc/Makeconf &&\
     sed -i '/^LIBR =/ s/$/ $(LIBR1)/' /usr/lib/R/etc/Makeconf
