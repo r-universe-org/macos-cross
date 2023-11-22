@@ -3,17 +3,6 @@ FROM ghcr.io/r-universe-org/macos-cross:toolchain
 ARG R_BRANCH=4.3
 ARG DARWIN=darwin22.2
 
-ENV MACOS_BUILD=1
-ENV MACOSX_DEPLOYMENT_TARGET=11.0
-ENV LIBRARY_PATH=/opt/R/x86_64/lib:${LIBRARY_PATH}
-ENV R_CONFIGURE_FLAGS="--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}"
-
-# Remove debug symbols (is this needed?)
-# Todo: properly merge the MacOS Renviron with the Linux one
-ENV _R_SHLIB_STRIP_=true
-ENV R_STRIP_SHARED_LIB="strip -x"
-ENV R_STRIP_STATIC_LIB="strip -S"
-
 RUN \
     curl https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc > /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
     echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list.d/cran.list  && \
@@ -53,19 +42,34 @@ RUN ln -s x86_64-apple-${DARWIN}-ar /osxcross/bin/ar && \
     ln -s /osxcross/bin/x86_64-apple-${DARWIN}-install_name_tool /osxcross/bin/install_name_tool &&\
     rm /opt/R/x86_64/bin/pkg-config && ln -s /opt/R/x86_64/bin/*-config /osxcross/bin/
 
+
+## This would override Linux configs with MacOS. But this may break the host?
+#RUN cp -R /macos/r/etc/* /usr/lib/R/etc
+#RUN cp -R /macos/r/share/make/* /usr/share/R/share/make
+
 # Prep host R for cross compiling
 COPY osxcross-x86_64.Makeconf /usr/lib/R/etc/Makeconf
 COPY uname-x86_64.sh /osxcross/bin/uname
 COPY pkg-config-x86_64.sh /osxcross/bin/pkg-config
-RUN cp -R /macos/r/etc /usr/lib/R/etc
-RUN cp -R /macos/r/share/make /usr/share/R/share/make
+
+# Fixup hardcoded things ppm
 RUN sed -i "s/darwin22/${DARWIN}/g" /usr/lib/R/etc/Makeconf
 
-ENV PROJ_GDAL_DATA_COPY=TRUE
-ENV ARROW_R_DEV=TRUE
+# Override R_PLATFORM variable
+RUN sed -i 's/x86_64-pc-linux-gnu/x86_64-apple-darwin20/g' /etc/R/Renviron
 
-# This determines only filename for created tarballs
-R_PLATFORM=x86_64-apple-darwin20
+# Overrides for the Linux Renviron
+ENV MACOS_BUILD=1
+ENV MACOSX_DEPLOYMENT_TARGET=11.0
+ENV LIBRARY_PATH=/opt/R/x86_64/lib:${LIBRARY_PATH}
+ENV R_CONFIGURE_FLAGS="--build=x86_64-pc-linux-gnu --host=x86_64-apple-${DARWIN}"
+ENV _R_SHLIB_STRIP_=true
+ENV R_STRIP_SHARED_LIB="strip -x"
+ENV R_STRIP_STATIC_LIB="strip -S"
+
+# Fix some R packages
+#ENV PROJ_GDAL_DATA_COPY=TRUE
+#ENV ARROW_R_DEV=TRUE
 
 # Experiment: force linking errors
 RUN sed -i "s/-undefined dynamic_lookup//g" /usr/lib/R/etc/Makeconf &&\
