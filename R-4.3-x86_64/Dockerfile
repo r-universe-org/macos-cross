@@ -70,7 +70,8 @@ ENV R_STRIP_STATIC_LIB="strip -S"
 
 # Fix some R packages
 #ENV PROJ_GDAL_DATA_COPY=TRUE
-#ENV ARROW_R_DEV=TRUE
+ENV ARROW_R_DEV=TRUE
+ENV LIBARROW_BINARY=darwin-x86_64-openssl-1.1
 
 # Experiment: force linking errors
 RUN sed -i "s/-undefined dynamic_lookup//g" /usr/lib/R/etc/Makeconf &&\
