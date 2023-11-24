@@ -26,11 +26,14 @@ ENV SDK_VERSION=13
 RUN ./build.sh
 
 # Build gcc (for gfortran)
-ENV GCC_VERSION=12.2.0
+ENV GCC_VERSION=13.2.0
 ENV ENABLE_FORTRAN=1
 ENV PATH="/osxcross/SDK/${OSX_SDK}/usr/bin:/osxcross/bin:${PATH}"
 
-# Test SDK is on the PATH
+# Custom steps for arm64
+RUN apt-get -y install automake libtool autoconf flex bison
+COPY build_gcc.sh /osxcross-master/build_gcc.sh
+
 RUN krb5-config --libs
 RUN ./build_gcc.sh
 
@@ -39,7 +42,8 @@ RUN ./build_gcc.sh
 FROM ubuntu:jammy
 ARG OSX_SDK
 COPY --from=build /osxcross /osxcross
-ENV PATH="/osxcross/SDK/${OSX_SDK}/usr/bin:/osxcross/bin:${PATH}"
+ENV OSX_SDK_PATH=/osxcross/SDK/${OSX_SDK}
+ENV PATH="${OSX_SDK_PATH}/usr/bin:/osxcross/bin:${PATH}"
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
