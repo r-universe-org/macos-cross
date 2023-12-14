@@ -1,5 +1,5 @@
 # Test set of interesting packages
-pkgs <- c("antiword", "arrangements", "arrow", "av", "brotli", "Cairo",
+pkgs <- c("antiword", "archive", "arrangements", "arrow", "av", "brotli", "Cairo",
 "cld2", "curl", "data.table", "duckdb", "fftw", "fftwtools",
 "gam", "gdtools", "gert", "git2r", "glmnet", "gmp", "httpgd",
 "hunspell", "igraph", "image.textlinedetector", "imager", "jqr",
