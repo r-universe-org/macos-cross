@@ -1,6 +1,6 @@
 # Test set of interesting packages
-pkgs <- c("antiword", "archive", "arrangements", "arrow", "av", "brotli", "Cairo",
-"cld2", "curl", "data.table", "duckdb", "fftw", "fftwtools",
+pkgs <- c("antiword", "archive", "arrangements", "arrow", "av", "brotli",
+"Cairo", "cld2", "curl", "data.table", "duckdb", "fftw", "fftwtools",
 "gam", "gdtools", "gert", "git2r", "glmnet", "gmp", "httpgd",
 "hunspell", "igraph", "image.textlinedetector", "imager", "jqr",
 "lwgeom", "magick", "Matrix", "mongolite", "odbc", "opencv",
@@ -20,8 +20,7 @@ cat("::group::Downloading sources\n")
 deps <- unname(unlist(tools::package_dependencies(pkgs, recursive = TRUE)))
 allpkgs <- sort(unique(c(pkgs, deps)))
 dir.create('sources')
-download.packages(allpkgs, 'sources', repos = c(
-  'https://r-spatial.r-universe.dev',
-  'https://ropensci.r-universe.dev',
-  'https://cloud.r-project.org'))
+download.packages(allpkgs, 'sources',
+  repos = sprintf('https://%s.r-universe.dev', c('r-spatial', 'r-lib', 'ropensci', 'cran')))
 cat("::endgroup::\n")
+
