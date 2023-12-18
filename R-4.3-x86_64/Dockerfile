@@ -25,9 +25,9 @@ RUN mkdir -p /macos/r &&\
 	rm -f R.tar.xz
 
 # Download and extract static CRAN libraries
-RUN curl -ssOL https://github.com/r-universe-org/cranlibs/releases/download/2023-08-10/cranlibs.tar.xz &&\
-	tar xf cranlibs.tar.xz -C / &&\
-	rm -f cranlibs.tar.xz &&\
+RUN curl -ssOL https://github.com/r-universe-org/cranlibs/releases/download/2023-12-18/cranlibs-x86_64.tar.xz &&\
+	tar xf cranlibs-x86_64.tar.xz -C / &&\
+	rm -f cranlibs-x86_64.tar.xz &&\
 	ln -s /opt/R/x86_64 /macos/usr
 
 ## Set RSPM as the default repo to get precompiled packages
