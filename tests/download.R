@@ -21,6 +21,6 @@ deps <- unname(unlist(tools::package_dependencies(pkgs, recursive = TRUE)))
 allpkgs <- sort(unique(c(pkgs, deps)))
 dir.create('sources')
 download.packages(allpkgs, 'sources',
-  repos = sprintf('https://%s.r-universe.dev', c('r-spatial', 'r-lib', 'ropensci', 'cran')))
+  repos = sprintf('https://%s.r-universe.dev', c('r-spatial', 'r-lib', 'ropensci', 'rcppcore', 'cran')))
 cat("::endgroup::\n")
 
